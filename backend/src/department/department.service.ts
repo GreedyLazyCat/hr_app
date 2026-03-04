@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { DepartmentRepository } from './department.repository';
 import { DepartmentFilterDto } from './dto/department-filter.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
-import { department } from 'src/db/schema';
 
 @Injectable()
 export class DepartmentService {

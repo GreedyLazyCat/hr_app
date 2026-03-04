@@ -26,10 +26,20 @@ export const department = pgTable(
   ],
 );
 
-export const jobPostion = pgTable('job_postion', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-});
+export const jobPostion = pgTable(
+  'job_postion',
+  {
+    id: serial('id').primaryKey(),
+    name: varchar('name', { length: 255 }).notNull(),
+  },
+
+  (table) => [
+    index('job_postion_name_trgm_index').using(
+      'gin',
+      sql`${table.name} gin_trgm_ops`,
+    ),
+  ],
+);
 
 export const employee = pgTable(
   'employee',
