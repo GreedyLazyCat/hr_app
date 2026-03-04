@@ -5,7 +5,7 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/job-position?name"
+  url: "{{baseUrl}}/job-position"
   params:
     - name: page
       value: "3"
@@ -14,6 +14,7 @@ http:
     - name: name
       value: ""
       type: query
+      disabled: true
     - name: itemsPerPage
       value: "1"
       type: query
