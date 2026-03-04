@@ -1,0 +1,58 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="A0A08835-E1D2-771E-4FDA-44BF9BF3F58E" name="department">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:24:43 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="BD95F6CB-8737-885E-0B16-03D59EE46D7E">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:25:21 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="BDC7CC26-CBD0-6D99-38BE-61A5AD29745D">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:25:31 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>255 CHAR</dataTypeSize>
+<ownDataTypeParameters>255 CHAR,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="2D16C7B3-F116-7134-C39F-0776C45CB273" name="department PK">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:25:29 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>BD95F6CB-8737-885E-0B16-03D59EE46D7E</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>

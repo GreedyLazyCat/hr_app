@@ -1,0 +1,159 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="F7EE4491-0CD2-4D56-54FE-890E16027F41" name="employee">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:19:37 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="id" id="3708DAB6-54DA-4631-81DC-D9CC7CD6B684">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:19:58 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="brith_date" id="5549FE57-A2FF-3316-FFE3-2BAE52575410">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:20:07 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="passport_series_and_number" id="E981333B-C707-A469-48D3-C3045F03CF02">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:20:23 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 CHAR</dataTypeSize>
+<ownDataTypeParameters>10 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="contacts" id="0E40BAA7-77C7-F9B4-6A46-AC441CB2DAE5">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:22:50 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="adress" id="C563115F-1BD8-13C8-F8E8-5265E63DEC35">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:23:02 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="salary" id="0CD3214D-3C8C-C452-0ECF-2F0C13A86665">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:23:19 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="hire_date" id="45673E89-CCB4-C317-0AF1-AF29F49E2946">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:24:04 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="is_fired" id="C6018E92-F432-5AE2-0301-9A3CE848C180">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:24:16 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1 BYTE</dataTypeSize>
+<ownDataTypeParameters>1 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="department_id" id="ACC96110-12E0-6F35-F844-6B5F7FC8BED4">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:25:57 UTC</createdTime>
+<generatorID>2EB1D1B4-892B-E11E-664F-FE9DC0125833</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<referedAttribute>BD95F6CB-8737-885E-0B16-03D59EE46D7E</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="job_position_id" id="8D34FBBF-2861-3E95-E1CE-C10D833D1482">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:27:38 UTC</createdTime>
+<generatorID>50623BAF-E3B7-E9DB-2D2A-6DC0599DCCE6</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<referedAttribute>8752806B-1AB5-7BC3-D6ED-FA74CA5BA878</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="46665AD8-6B30-CF31-9859-4DAC802104E2" name="Employee PK">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:20:05 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>3708DAB6-54DA-4631-81DC-D9CC7CD6B684</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
