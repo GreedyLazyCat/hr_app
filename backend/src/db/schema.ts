@@ -1,3 +1,4 @@
+import { sql, SQL } from 'drizzle-orm';
 import {
   pgTable,
   integer,
@@ -7,6 +8,7 @@ import {
   boolean,
   uniqueIndex,
   serial,
+  index,
 } from 'drizzle-orm/pg-core';
 
 export const department = pgTable('department', {
@@ -53,9 +55,22 @@ export const employee = pgTable(
     jobPositionId: integer('job_position_id')
       .notNull()
       .references(() => jobPostion.id),
+
+    fullName: text('full_name').generatedAlwaysAs(
+      (): SQL =>
+        sql`${employee.firstName} || ' ' || ${employee.lastName} || ' ' || coalesce(${employee.patronymic}, '')`,
+    ),
   },
   (table) => [
     uniqueIndex('employee_department_unique_idx').on(table.departmentId),
     uniqueIndex('employee_job_position_unique_idx').on(table.jobPositionId),
+    index('teacher_name_search_index').using(
+      'gin',
+      sql`to_tsvector('russian', ${table.fullName})`,
+    ),
+    index('tracher_name_trgrm_index').using(
+      'gin',
+      sql`${table.fullName} gin_trgm_ops`,
+    ),
   ],
 );
