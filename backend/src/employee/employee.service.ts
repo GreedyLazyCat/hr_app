@@ -25,7 +25,9 @@ export class EmployeeService {
     const employee = await this.findOne(id);
 
     if (employee.isFired) {
-      throw new ForbiddenException();
+      throw new ForbiddenException(
+        'Нельзя редактировать уволенного сотрудника.',
+      );
     }
 
     return await this.employeeRepo.update(id, updateEmployeeDto);
