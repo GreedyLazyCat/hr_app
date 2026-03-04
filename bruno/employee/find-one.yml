@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/department/:id"
+  url: "{{baseUrl}}/employee/:id"
   params:
     - name: id
-      value: "13"
+      value: "1"
       type: path
   auth: inherit
 

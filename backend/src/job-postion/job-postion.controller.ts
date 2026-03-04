@@ -9,13 +9,13 @@ import {
   ParseIntPipe,
   Query,
 } from '@nestjs/common';
-import { JobPostionService } from './job-postion.service';
+import { JobPositionService } from './job-postion.service';
 import { JobPostionFilter } from './dto/job-postion-filter.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
 
-@Controller('job-postion')
-export class JobPostionController {
-  constructor(private readonly jobPostionService: JobPostionService) {}
+@Controller('job-position')
+export class JobPositionController {
+  constructor(private readonly jobPostionService: JobPositionService) {}
 
   @Get()
   findAll(

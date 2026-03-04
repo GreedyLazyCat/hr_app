@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { JobPostionService } from './job-postion.service';
-import { JobPostionController } from './job-postion.controller';
+import { JobPositionService } from './job-postion.service';
+import { JobPositionController } from './job-postion.controller';
 import { DbModule } from 'src/db/db.module';
-import { JobPostionRepository } from './job-postion.repository';
+import { JobPositionRepository } from './job-postion.repository';
 
 @Module({
   imports: [DbModule],
-  controllers: [JobPostionController],
-  providers: [JobPostionService, JobPostionRepository],
+  controllers: [JobPositionController],
+  providers: [JobPositionService, JobPositionRepository],
 })
 export class JobPostionModule {}

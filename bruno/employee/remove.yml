@@ -1,14 +1,14 @@
 info:
-  name: find-one
+  name: remove
   type: http
-  seq: 2
+  seq: 5
 
 http:
-  method: GET
-  url: "{{baseUrl}}/department/:id"
+  method: DELETE
+  url: "{{baseUrl}}/employee/:id"
   params:
     - name: id
-      value: "13"
+      value: ""
       type: path
   auth: inherit
 

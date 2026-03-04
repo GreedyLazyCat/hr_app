@@ -1,17 +1,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { JobPostionController } from './job-postion.controller';
-import { JobPostionService } from './job-postion.service';
+import { JobPositionController } from './job-postion.controller';
+import { JobPositionService } from './job-postion.service';
 
 describe('JobPostionController', () => {
-  let controller: JobPostionController;
+  let controller: JobPositionController;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [JobPostionController],
-      providers: [JobPostionService],
+      controllers: [JobPositionController],
+      providers: [JobPositionService],
     }).compile();
 
-    controller = module.get<JobPostionController>(JobPostionController);
+    controller = module.get<JobPositionController>(JobPositionController);
   });
 
   it('should be defined', () => {

@@ -1,0 +1,27 @@
+info:
+  name: find-all
+  type: http
+  seq: 1
+
+http:
+  method: GET
+  url: "{{baseUrl}}/job-position?name"
+  params:
+    - name: page
+      value: "3"
+      type: query
+      disabled: true
+    - name: name
+      value: ""
+      type: query
+    - name: itemsPerPage
+      value: "1"
+      type: query
+      disabled: true
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

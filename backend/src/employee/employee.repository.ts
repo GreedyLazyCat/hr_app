@@ -29,7 +29,10 @@ export class EmployeeRepository {
   async create(createEmployeeDto: CreateEmployeeDto) {
     const result = await this.db
       .insert(employee)
-      .values(createEmployeeDto)
+      .values({
+        ...createEmployeeDto,
+        isFired: false,
+      })
       .returning();
 
     if (result.length < 1) {
@@ -45,7 +48,7 @@ export class EmployeeRepository {
     if (filters.fullName) {
       sqlFilters.push(
         or(
-          sql`ts_vector('russian', employee.fullName) @@ websearch_to_tsquery('russian', ${filters.fullName})`,
+          sql`to_tsvector('russian', ${employee.fullName}) @@ websearch_to_tsquery('russian', ${filters.fullName})`,
           sql`similarity(${employee.fullName}, ${filters.fullName}) > 0.3`,
           ilike(employee.fullName, `%${filters.fullName}%`),
         ),
@@ -97,14 +100,15 @@ export class EmployeeRepository {
         jobPosition: jobPostion,
       })
       .from(employee)
+      .where(and(...sqlFilters))
       .leftJoin(department, eq(employee.departmentId, department.id))
       .leftJoin(jobPostion, eq(employee.jobPositionId, jobPostion.id))
-      .where(and(...sqlFilters))
       .$dynamic();
 
     if (pagination) {
       query = withPagination(query, pagination);
     }
+
     query = query.orderBy(...orderFilters);
 
     return await query;
@@ -185,6 +189,7 @@ export class EmployeeRepository {
     const result = await this.db
       .update(employee)
       .set(updateEmployeeDto)
+      .where(eq(employee.id, id))
       .returning();
 
     if (result.length < 1) {

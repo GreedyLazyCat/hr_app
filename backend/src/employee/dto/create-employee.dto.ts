@@ -1,7 +1,9 @@
 import {
+  IsBoolean,
   IsDateString,
   IsInt,
   IsNotEmpty,
+  IsNumberString,
   IsOptional,
   IsString,
   MaxLength,
@@ -26,7 +28,7 @@ export class CreateEmployeeDto {
   @MaxLength(10)
   brithDate: string;
 
-  @IsString()
+  @IsNumberString()
   @IsNotEmpty()
   @MinLength(10)
   @MaxLength(10)
@@ -40,17 +42,12 @@ export class CreateEmployeeDto {
   @IsNotEmpty()
   adress: string;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsInt()
   salary: number;
 
-  @IsString()
-  @IsNotEmpty()
+  @IsDateString()
+  @MaxLength(10)
   hireDate: string;
-
-  @IsString()
-  @IsNotEmpty()
-  isFired: boolean;
 
   @IsInt()
   @IsNotEmpty()

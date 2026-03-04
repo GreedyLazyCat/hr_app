@@ -9,7 +9,7 @@ import { withPagination } from 'src/common/utils/with-pagination';
 import { ObjectNotFoundException } from 'src/common/exception/object-not-found.exception';
 
 @Injectable()
-export class JobPostionRepository {
+export class JobPositionRepository {
   constructor(@InjectDb() private db: DbType) {}
 
   private getSqlFilters(filters: JobPostionRepoFilter) {

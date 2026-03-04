@@ -82,8 +82,6 @@ export const employee = pgTable(
     ),
   },
   (table) => [
-    uniqueIndex('employee_department_unique_idx').on(table.departmentId),
-    uniqueIndex('employee_job_position_unique_idx').on(table.jobPositionId),
     index('teacher_name_search_index').using(
       'gin',
       sql`to_tsvector('russian', ${table.fullName})`,

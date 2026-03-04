@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateEmployeeDto } from './dto/create-employee.dto';
 import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeRepository } from './employee.repository';
@@ -14,15 +14,21 @@ export class EmployeeService {
   }
 
   findAllFull(filters: EmployeeFilterDto, pagination: PaginationDto) {
-    return this.findAllFull(filters, pagination);
+    return this.employeeRepo.findAllFull(filters, pagination);
   }
 
   findOne(id: number) {
     return this.employeeRepo.findOne(id);
   }
 
-  update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
-    return this.employeeRepo.update(id, updateEmployeeDto);
+  async update(id: number, updateEmployeeDto: UpdateEmployeeDto) {
+    const employee = await this.findOne(id);
+
+    if (employee.isFired) {
+      throw new ForbiddenException();
+    }
+
+    return await this.employeeRepo.update(id, updateEmployeeDto);
   }
 
   remove(id: number) {

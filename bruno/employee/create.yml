@@ -1,0 +1,31 @@
+info:
+  name: create
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{baseUrl}}/employee"
+  body:
+    type: json
+    data: |-
+      {
+        "firstName": "Иванов",
+        "lastName": "Иван",
+        "patronymic": "Петрович",
+        "brithDate": "2003-12-02",
+        "passportSeriesAndNumber": "1212.34567",
+        "contacts": "string",
+        "adress": "string",
+        "salary": 123,
+        "hireDate": "2003-12-02",
+        "departmentId": 1,
+        "jobPositionId": 1
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
