@@ -27,6 +27,46 @@
 <logicalDatatype>LOGDT011</logicalDatatype>
 <ownDataTypeParameters>,,</ownDataTypeParameters>
 </Attribute>
+<Attribute name="first_name" id="D90AC383-0B4C-1BC3-F88C-475712BFE79A">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:57:24 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>300 CHAR</dataTypeSize>
+<ownDataTypeParameters>300 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="last_name" id="990A7A3E-19FA-E0C4-61B1-3429139CA9C2">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:57:56 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500 CHAR</dataTypeSize>
+<ownDataTypeParameters>500 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="patronymic" id="C818349E-4354-C2E6-AA05-E8786991AED7">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:58:13 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<engineerTo>
+<item key="7AE5E6E3-BBBB-6EA1-18C6-511591B3E7F3" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>500</dataTypeSize>
+<ownDataTypeParameters>500,,</ownDataTypeParameters>
+</Attribute>
 <Attribute name="brith_date" id="5549FE57-A2FF-3316-FFE3-2BAE52575410">
 <createdBy>dima</createdBy>
 <createdTime>2026-03-04 13:20:07 UTC</createdTime>

@@ -1,0 +1,190 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2039E823-28FD-0336-05DC-B424C69A8200" name="employee">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>F7EE4491-0CD2-4D56-54FE-890E16027F41</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="id" id="B6DC311B-9C3E-A1B9-3E9D-0549124502F0">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>3708DAB6-54DA-4631-81DC-D9CC7CD6B684</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="brith_date" id="6C4AD72E-60A2-C18B-E76D-0C57DCC501C2">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>5549FE57-A2FF-3316-FFE3-2BAE52575410</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="passport_series_and_number" id="7A0BE308-6D55-E69F-CA2A-F3E5256C4833">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>E981333B-C707-A469-48D3-C3045F03CF02</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>10 CHAR</dataTypeSize>
+<ownDataTypeParameters>10 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="contacts" id="9605DE00-CB4A-B7C9-81BD-21DF635361D8">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>0E40BAA7-77C7-F9B4-6A46-AC441CB2DAE5</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="adress" id="42B9DFC9-0D4B-0D4E-862A-CF4404CA6026">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>C563115F-1BD8-13C8-F8E8-5265E63DEC35</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT040</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="salary" id="441B69E4-5354-027A-0E41-A9EC4DB1075E">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>0CD3214D-3C8C-C452-0ECF-2F0C13A86665</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="hire_date" id="389BA9E5-4E27-4BE2-8100-EB16E663A559">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>45673E89-CCB4-C317-0AF1-AF29F49E2946</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="is_fired" id="C587AD03-0C4C-3455-AEFE-69BBF2470BE4">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>C6018E92-F432-5AE2-0301-9A3CE848C180</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT006</logicalDatatype>
+<dataTypeSize>1 BYTE</dataTypeSize>
+<ownDataTypeParameters>1 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="department_id" id="77B24344-3C34-CD2C-7C9F-463C882E1041">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>ACC96110-12E0-6F35-F844-6B5F7FC8BED4</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A0686C4E-4C9B-4C3E-2CFF-57B0AB257529" referredColumn="86314AFC-4A20-9E41-493A-B48E93FB96C3"/>
+</associations>
+</Column>
+<Column name="job_position_id" id="304B8814-5F30-A36E-3624-4B9BFBC5E3D2">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>8D34FBBF-2861-3E95-E1CE-C10D833D1482</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="7FF9DB6E-1176-2B0E-5734-67EF0043F942" referredColumn="5ADE043A-9DB6-B4CF-4520-657C33660497"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="F9AC3C63-9B5D-4699-4510-F626033D8D0E" name="employee_PK">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>46665AD8-6B30-CF31-9859-4DAC802104E2</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="B6DC311B-9C3E-A1B9-3E9D-0549124502F0"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="E21ED493-9E9A-484F-796E-BF3AB06EC139" name="employee__IDX">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>2EB1D1B4-892B-E11E-664F-FE9DC0125833</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="77B24344-3C34-CD2C-7C9F-463C882E1041"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="4B151F5D-F054-3010-13C3-9D19BCDDD158" name="employee__IDXv1">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<ownerDesignName>dbmodel</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>50623BAF-E3B7-E9DB-2D2A-6DC0599DCCE6</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="304B8814-5F30-A36E-3624-4B9BFBC5E3D2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="F62600CA-E29D-17CF-F254-71A500CFEA5E" name="employee_department_FK">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>2EB1D1B4-892B-E11E-664F-FE9DC0125833</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="77B24344-3C34-CD2C-7C9F-463C882E1041"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="A5784C29-7628-BE51-EA53-9E46F1233F94" name="employee_job_postion_FK">
+<createdBy>dima</createdBy>
+<createdTime>2026-03-04 13:45:31 UTC</createdTime>
+<generatorID>50623BAF-E3B7-E9DB-2D2A-6DC0599DCCE6</generatorID>
+<ownerDesignName>dbmodel</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="304B8814-5F30-A36E-3624-4B9BFBC5E3D2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>
