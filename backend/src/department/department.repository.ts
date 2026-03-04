@@ -19,7 +19,7 @@ export class DepartmentRepository {
       sqlFilters.push(
         or(
           sql`similarity(${department.name}, ${filters.name}) > 0.3`,
-          ilike(department.name, filters.name),
+          ilike(department.name, `%${filters.name}%`),
         ),
       );
     }

@@ -1,16 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { DepartmentRepository } from './department.repository';
+import { DepartmentFilterDto } from './dto/department-filter.dto';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { department } from 'src/db/schema';
 
 @Injectable()
 export class DepartmentService {
-  constructor(departmentRepo: DepartmentRepository) {}
+  constructor(private departmentRepo: DepartmentRepository) {}
 
-  findAll() {
-    return `This action returns all department`;
+  findAll(filters: DepartmentFilterDto, pagination: PaginationDto) {
+    return this.departmentRepo.findAll(filters, pagination);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} department`;
+    return this.departmentRepo.findOne(id);
   }
-
 }
