@@ -1,3 +1,4 @@
+import { table } from 'console';
 import { sql, SQL } from 'drizzle-orm';
 import {
   pgTable,
@@ -11,10 +12,19 @@ import {
   index,
 } from 'drizzle-orm/pg-core';
 
-export const department = pgTable('department', {
-  id: serial('id').primaryKey(),
-  name: varchar('name', { length: 255 }).notNull(),
-});
+export const department = pgTable(
+  'department',
+  {
+    id: serial('id').primaryKey(),
+    name: varchar('name', { length: 255 }).notNull(),
+  },
+  (table) => [
+    index('department_name_trgm_index').using(
+      'gin',
+      sql`${table.name} gin_trgm_ops`,
+    ),
+  ],
+);
 
 export const jobPostion = pgTable('job_postion', {
   id: serial('id').primaryKey(),
