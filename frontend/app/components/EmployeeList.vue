@@ -50,7 +50,7 @@ const employees = ref<EmployeeFull[]>(
 
 </script>
 <template>
-    <div class="flex flex-col">
+    <div class="flex flex-col gap-2 w-full">
         <EmployeeCard v-for="employee in employees" :employee="employee"></EmployeeCard>
     </div>
 </template>

@@ -9,8 +9,8 @@
             </TextInput>
             <div class="flex flex-col border border-border px-4 py-3 bg-bg rounded-xl">
                 <div class="flex items-center gap-1 pb-3">
-                    <Icon name="material-symbols:filter-alt"></Icon>
-                    <h2>Фильтры</h2>
+                    <Icon name="material-symbols:filter-alt" class="text-xl"></Icon>
+                    <h2 class="text-xl">Фильтры</h2>
                 </div>
                 <div class="flex flex-col gap-3">
                     <div class="flex flex-col md:flex-row gap-3">
@@ -27,9 +27,8 @@
                 </div>
             </div>
         </div>
-        <div class="flex gap-2">
+        <div class="flex gap-2 py-4">
             <EmployeeList></EmployeeList>
-            <div></div>
         </div>
     </section>
 </template>
