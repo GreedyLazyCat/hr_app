@@ -12,6 +12,11 @@ const jobPositionFilter = ref<JobPostion | null>({
     name: "Разработчик"
 })
 
+function clearFilters() {
+    jobPositionFilter.value = null
+    departmentFilter.value = null
+}
+
 </script>
 <template>
     <section class="container flex w-full flex-col px-3 mx-auto">
@@ -42,7 +47,7 @@ const jobPositionFilter = ref<JobPostion | null>({
                             </Selector>
                         </div>
                     </div>
-                    <button class="btn">Сбросить фильтры</button>
+                    <button class="btn" @click="clearFilters()">Сбросить фильтры</button>
                 </div>
             </div>
         </div>

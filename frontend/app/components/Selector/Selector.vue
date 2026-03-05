@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { modalTitle = "Окно селектора", displayField = "name" } = defineProps<{
+const { modalTitle = "Окно селектора", displayField = "name", keyField } = defineProps<{
     displayField: string,
     keyField: string,
     apiPath: string,
@@ -20,6 +20,17 @@ const isSelectedModalNull = computed(() => {
     return selectedInModal.value ? false : true
 })
 
+const items = ref([
+    {
+        id: 1,
+        name: "Тестовый 1"
+    },
+    {
+        id: 2,
+        name: "Тестовый 2"
+    },
+])
+
 function openSelectorModal() {
     showSelectorModal.value = true
 }
@@ -35,6 +46,26 @@ function clearSelectedInModal() {
 function confirm() {
     model.value = selectedInModal.value
     closeSelectorModal()
+}
+
+function isSelected(item: Record<string, any>) {
+    if (selectedInModal.value && selectedInModal.value[keyField] === item[keyField]) {
+        return true
+    }
+
+    return false
+}
+
+function selectItem(item: Record<string, any>) {
+    selectedInModal.value = item
+}
+
+function getItemDisplayField(item: Record<string, any>) {
+    if (Object.keys(item).includes(displayField)) {
+        return item[displayField]
+    }
+
+    return "Название элемента"
 }
 
 watch(showSelectorModal, (newVal) => {
@@ -54,17 +85,23 @@ watch(showSelectorModal, (newVal) => {
         </div>
         <Icon name="material-symbols:keyboard-arrow-down"></Icon>
         <Modal :title="modalTitle" :is-open="showSelectorModal" @close="closeSelectorModal()">
-            <div class="flex flex-col gap-2 w-full md:min-w-150">
+            <div class="flex flex-col gap-4 w-full md:min-w-150">
                 <TextInput placeholder="Поиск по названию" class="w-full">
                     <template #trailing>
                         <Icon name="material-symbols:search" class="text-text-muted text-lg"></Icon>
                     </template>
                 </TextInput>
-                <div class="w-full min-h-20 max-h-120 overflow-scroll">
+                <div class="flex flex-col gap-2 w-full min-h-20 max-h-120 overflow-scroll">
                     <div class="flex items-center justify-between border border-border cursor-pointer w-full px-4 py-3 rounded-xl"
                         :class="{ 'bg-primary text-bg-light': isSelectedModalNull }" @click="clearSelectedInModal()">
                         <span>Не выбрано</span>
                         <Icon name="material-symbols:check" v-if="isSelectedModalNull"></Icon>
+                    </div>
+                    <div v-for="item in items"
+                        class="flex items-center justify-between border border-border cursor-pointer w-full px-4 py-3 rounded-xl"
+                        :class="{ 'bg-primary text-bg-light': isSelected(item) }" @click="selectItem(item)">
+                        <span>{{ getItemDisplayField(item) }}</span>
+                        <Icon name="material-symbols:check" v-if="isSelected(item)"></Icon>
                     </div>
                 </div>
                 <div class="flex gap-2 justify-end w-full">
