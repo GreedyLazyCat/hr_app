@@ -1,3 +1,18 @@
+<script lang="ts" setup>
+
+const departmentFilter = ref<Department | null>(
+    {
+        id: 1,
+        name: "Отдел"
+    }
+)
+
+const jobPositionFilter = ref<JobPostion | null>({
+    id: 1,
+    name: "Разработчик"
+})
+
+</script>
 <template>
     <section class="container flex w-full flex-col px-3 mx-auto">
         <h1 class="text-3xl my-5">Отдел HR</h1>
@@ -16,11 +31,15 @@
                     <div class="flex flex-col md:flex-row gap-3">
                         <div class="flex flex-col gap-2 w-full">
                             <label for="">Отдел</label>
-                            <TextInput placeholder="Отдел"></TextInput>
+                            <Selector key-field="id" modal-title="Выбрать отдел" api-path="/" display-field="name"
+                                v-model="departmentFilter">
+                            </Selector>
                         </div>
                         <div class="flex flex-col gap-2 w-full">
                             <label for="">Должность</label>
-                            <TextInput placeholder="Должность"></TextInput>
+                            <Selector key-field="id" modal-title="Выбрать должность" api-path="/" display-field="name"
+                                v-model="jobPositionFilter">
+                            </Selector>
                         </div>
                     </div>
                     <button class="btn">Сбросить фильтры</button>

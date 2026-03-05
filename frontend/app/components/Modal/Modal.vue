@@ -44,20 +44,21 @@ watch(() => isOpen, (newVal) => {
 
 <template>
     <Transition name="modal-transition">
-        <div v-if="isOpen" class="fixed inset-0 bg-primary/40 flex items-center justify-center p-4 overflow-y-auto"
-            @click="clickedOutside" :style="styles">
-            <div class="bg-bg border border-border rounded-2xl shadow-lg max-h-full" :class="modalClass" @click.stop>
-                <slot name="beforeHeader"></slot>
-                <div class="flex items-center justify-center relative px-6" :class="headerClass" v-if="hasHeader">
-                    <h2 class="text-xl font-medium text-center">{{ title }}</h2>
-                    <button @click="closeModal"
-                        class="absolute right-6 top-1/2 transform -translate-y-1/2 text-text-secondary hover:text-primary transition-colors">
-                        <Icon name="material-symbols:close" class="text-2xl" />
-                    </button>
+        <Teleport to="#teleports">
+            <div v-if="isOpen" class="fixed inset-0 bg-primary/40 flex items-center justify-center p-4 overflow-y-auto"
+                @click="clickedOutside" :style="styles">
+                <div class="w-full md:w-fit flex flex-col p-4 gap-2 bg-bg border border-border rounded-2xl shadow-lg max-h-full"
+                    :class="modalClass" @click.stop>
+                    <div class="flex items-center justify-between relative " :class="headerClass" v-if="hasHeader">
+                        <h2 class="text-xl font-medium text-center">{{ title }}</h2>
+                        <button @click="closeModal" class="text-text hover:text-primary transition-colors">
+                            <Icon name="material-symbols:close" class="text-2xl" />
+                        </button>
+                    </div>
+                    <slot></slot>
                 </div>
-                <slot></slot>
             </div>
-        </div>
+        </Teleport>
     </Transition>
 </template>
 

@@ -57,7 +57,7 @@ function onCloseEditModal() {
 <template>
     <div class="flex flex-col gap-2 w-full">
         <Modal title="Редактировать сотрудника" :is-open="showEditModal" @close="onCloseEditModal()">
-            <div class="w-100"></div>
+            <div class="w-120"></div>
         </Modal>
         <EmployeeCard v-for="employee in employees" :employee="employee" @edit-clicked="showEditModal = true">
         </EmployeeCard>
