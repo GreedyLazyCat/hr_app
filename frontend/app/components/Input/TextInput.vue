@@ -20,7 +20,7 @@ function focusInput() {
 </script>
 
 <template>
-    <div class="flex gap-2 items-center bg-bg border border-border px-4 py-3 rounded-xl hover:cursor-text focus-within:border-accent transition-colors"
+    <div class="flex gap-2 items-center bg-bg border border-border px-4 py-3 rounded-xl hover:cursor-text focus-within:border-primary focus-within:border-2 transition-all"
         @click="focusInput">
         <input :type="type" :id="inputId" :name="name" ref="input" v-model="model" :placeholder="placeholder"
             class="focus:outline-0 w-full text-text-muted">
