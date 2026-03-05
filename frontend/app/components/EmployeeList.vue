@@ -47,10 +47,19 @@ const employees = ref<EmployeeFull[]>(
         }
     ]
 )
+const showEditModal = ref(false)
+
+function onCloseEditModal() {
+    showEditModal.value = false
+}
 
 </script>
 <template>
     <div class="flex flex-col gap-2 w-full">
-        <EmployeeCard v-for="employee in employees" :employee="employee"></EmployeeCard>
+        <Modal title="Редактировать сотрудника" :is-open="showEditModal" @close="onCloseEditModal()">
+            <div class="w-100"></div>
+        </Modal>
+        <EmployeeCard v-for="employee in employees" :employee="employee" @edit-clicked="showEditModal = true">
+        </EmployeeCard>
     </div>
 </template>

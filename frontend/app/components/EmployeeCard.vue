@@ -4,12 +4,25 @@ const { employee } = defineProps<{
     employee: EmployeeFull
 }>()
 
+const emit = defineEmits<{
+    (e: 'editClicked', employee: EmployeeFull): void;
+    (e: 'fireClicked', employee: EmployeeFull): void;
+}>()
+
 const passport = computed(() => {
     const series = employee.passportSeriesAndNumber.slice(0, 4)
     const number = employee.passportSeriesAndNumber.slice(4, 10)
 
     return `${series} ${number}`
 })
+
+function fireClicked() {
+    emit('fireClicked', employee)
+}
+
+function editClicked() {
+    emit('editClicked', employee)
+}
 
 </script>
 
@@ -65,12 +78,12 @@ const passport = computed(() => {
         </div>
 
         <div class="flex justify-end gap-2 mt-3 pt-3 border-t border-border">
-            <button class="btn flex items-center gap-2 bg-danger border-danger px-4">
+            <button class="btn flex items-center gap-2 bg-danger border-danger px-4" @click="fireClicked()">
                 <Icon name="material-symbols:person-off" />
                 <span>Уволить</span>
             </button>
 
-            <button class="btn flex items-center gap-2 px-4">
+            <button class="btn flex items-center gap-2 px-4" @click="editClicked()">
                 <Icon name="material-symbols:edit" />
                 <span>Редактировать</span>
             </button>
