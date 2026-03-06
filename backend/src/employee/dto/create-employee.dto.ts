@@ -26,7 +26,7 @@ export class CreateEmployeeDto {
 
   @IsDateString()
   @MaxLength(10)
-  brithDate: string;
+  birthDate: string;
 
   @IsNumberString()
   @IsNotEmpty()

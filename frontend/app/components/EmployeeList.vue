@@ -1,7 +1,10 @@
 <script lang="ts" setup>
 import * as z from "zod";
+import { finalize } from "zod/v4/core";
 import useForm from "~/composables/useForm";
 import useItemLoader from "~/composables/useItemLoader";
+
+const { $api } = useNuxtApp()
 
 const { filters } = defineProps<{
     filters: {
@@ -9,7 +12,7 @@ const { filters } = defineProps<{
         jobPosition: JobPostion | null,
         department: Department | null
     }
-}>()
+}>();
 
 const {
     items: employees,
@@ -26,15 +29,23 @@ const currentEmployee = ref<EmployeeFull | null>(null);
 const showFireConfirmationModal = ref(false);
 const employeeToFire = ref<EmployeeFull | null>(null);
 const error = ref<any>(null);
+const isSaving = ref(false);
+
+const phoneRegex = /^(\+7|8|7)[\s-]?\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{2}[\s-]?\d{2}$/;
+
+const addressRegex = /^[а-яёА-ЯЁ0-9\s.,-\/]{5,100}$/u;
+const addressExample = "101000, г. Москва, ул. Примерная, д. 10";
+
+const passportRegex = /^\d{10}$/;
 
 const employeeSchema = z.object({
     firstName: z.string().min(1, "Имя обязательно"),
     lastName: z.string().min(1, "Фамилия обязательна"),
-    patronymic: z.string().optional(),
+    patronymic: z.string().nullable().optional(),
     birthDate: z.string().min(1, "Дата рождения обязательна"),
-    passportSeriesAndNumber: z.string().min(1, "Серия и номер паспорта обязательны"),
-    contacts: z.string().min(1, "Контакты обязательны"),
-    adress: z.string().min(1, "Адрес обязателен"),
+    passportSeriesAndNumber: z.string().regex(passportRegex, "Серия и номер паспорта должны быть 10 цифрами"),
+    contacts: z.string().regex(phoneRegex, "Контакты должны быть в формате: +7 (XXX) XXX-XX-XX, 8 XXX XXX-XX-XX или 7 XXX XXX-XX-XX"),
+    adress: z.string().regex(addressRegex, `Адрес должен быть в формате: ${addressExample}`),
     salary: z.number().min(1, "Зарплата обязательна"),
     hireDate: z.string().min(1, "Дата приема на работу обязательна"),
     department: z.object({
@@ -62,7 +73,12 @@ const form = useForm<EmployeeFullWOId>(
         jobPosition: null,
     },
     async (fields) => {
-        saveEmployee(fields);
+        isSaving.value = true;
+        try {
+            await saveEmployee(fields);
+        } finally {
+            isSaving.value = false;
+        }
     },
     employeeSchema
 );
@@ -92,23 +108,27 @@ function onCloseEditModal() {
 
 function onEditEmployee(employee: EmployeeFull) {
     currentEmployee.value = { ...employee };
-    form.fields = { ...employee };
+    form.fields = {
+        ...employee,
+        department: employee.department,
+        jobPosition: employee.jobPosition
+    };
     form.resetErrors()
     showEditModal.value = true;
 }
 
 function onAddEmployee() {
     currentEmployee.value = {
-        id: 0,
+        id: -1,
         firstName: "",
         lastName: "",
         patronymic: "",
-        birthDate: "2025-10-25",
+        birthDate: "",
         passportSeriesAndNumber: "",
         contacts: "",
         adress: "",
         salary: 0,
-        hireDate: "2025-10-25",
+        hireDate: "",
         isFired: false,
         department: null,
         jobPosition: null,
@@ -118,12 +138,12 @@ function onAddEmployee() {
         firstName: "",
         lastName: "",
         patronymic: "",
-        birthDate: "2025-10-25",
+        birthDate: "",
         passportSeriesAndNumber: "",
         contacts: "",
         adress: "",
         salary: 0,
-        hireDate: "2025-10-25",
+        hireDate: "",
         department: null,
         jobPosition: null,
     };
@@ -131,33 +151,59 @@ function onAddEmployee() {
     form.resetErrors()
 }
 
-function saveEmployee(fields: EmployeeFullWOId) {
+async function saveEmployee(fields: EmployeeFullWOId) {
     if (currentEmployee.value) {
-        if (currentEmployee.value.id === 0) {
-            employees.value.push({ ...fields, id: employees.value.length + 1, fullName: null, isFired: false });
-        } else {
-            const index = employees.value.findIndex(emp => emp.id === currentEmployee.value!.id);
-            if (index !== -1) {
-                employees.value[index] = { ...fields, id: currentEmployee.value.id, isFired: currentEmployee.value.isFired, fullName: currentEmployee.value.fullName };
+        try {
+            if (currentEmployee.value.id === -1) {
+                const response = await $api<EmployeeFull>('/employee', {
+                    method: 'POST',
+                    body: {
+                        ...fields,
+                        patronymic: (fields.patronymic === "") ? null : fields.patronymic,
+                        departmentId: fields.department?.id,
+                        jobPositionId: fields.jobPosition?.id
+                    }
+                });
+                await fetchEmployees();
+            } else {
+                const response = await $api<EmployeeFull>(`/employee/${currentEmployee.value.id}`, {
+                    method: 'PATCH',
+                    body: {
+                        ...fields,
+                        patronymic: (fields.patronymic === "") ? null : fields.patronymic,
+                        departmentId: fields.department?.id,
+                        jobPositionId: fields.jobPosition?.id
+                    }
+                });
+                await fetchEmployees();
             }
+            onCloseEditModal();
+        } catch (err) {
+            console.error("Failed to save employee:", err);
         }
-        onCloseEditModal();
     }
 }
 
-function onFireEmployee(employee: EmployeeFull) {
+async function onFireEmployee(employee: EmployeeFull) {
     employeeToFire.value = employee;
     showFireConfirmationModal.value = true;
 }
 
-function fireEmployee() {
+async function fireEmployee() {
     if (employeeToFire.value) {
-        const index = employees.value.findIndex(emp => emp.id === employeeToFire.value!.id);
-        if (index !== -1 && employees.value[index]) {
-            employees.value[index].isFired = true;
+        try {
+            await $api(`/employee/${employeeToFire.value.id}`, {
+                method: 'PATCH',
+                body: {
+                    isFired: true
+                }
+            });
+            await fetchEmployees();
+            showFireConfirmationModal.value = false;
+            employeeToFire.value = null;
+        } catch (err) {
+            console.error("Failed to fire employee:", err);
         }
-        showFireConfirmationModal.value = false;
-        employeeToFire.value = null;
     }
 }
 
@@ -220,21 +266,21 @@ onMounted(() => {
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="passportSeriesAndNumber">Серия и номер паспорта*</label>
-                    <TextInput v-model="form.fields.passportSeriesAndNumber" placeholder="Серия и номер паспорта"
+                    <TextInput v-model="form.fields.passportSeriesAndNumber" placeholder="1234567890"
                         :has-error="!!form.fieldErrors.passportSeriesAndNumber" />
                     <span v-if="form.fieldErrors.passportSeriesAndNumber" class="text-danger text-sm">{{
                         form.fieldErrors.passportSeriesAndNumber }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="contacts">Контакты*</label>
-                    <TextInput v-model="form.fields.contacts" placeholder="Контакты"
+                    <TextInput v-model="form.fields.contacts" placeholder="+7 (XXX) XXX-XX-XX"
                         :has-error="!!form.fieldErrors.contacts" />
                     <span v-if="form.fieldErrors.contacts" class="text-danger text-sm">{{ form.fieldErrors.contacts
                         }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="adress">Адрес*</label>
-                    <TextInput v-model="form.fields.adress" placeholder="Адрес"
+                    <TextInput v-model="form.fields.adress" :placeholder="addressExample"
                         :has-error="!!form.fieldErrors.adress" />
                     <span v-if="form.fieldErrors.adress" class="text-danger text-sm">{{ form.fieldErrors.adress
                         }}</span>
@@ -255,7 +301,7 @@ onMounted(() => {
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="department">Отдел*</label>
-                    <Selector key-field="id" modal-title="Выбрать отдел" api-path="/departments" display-field="name"
+                    <Selector key-field="id" modal-title="Выбрать отдел" api-path="/department" display-field="name"
                         v-model="form.fields.department" :has-error="!!form.fieldErrors.department">
                     </Selector>
                     <span v-if="form.fieldErrors.department" class="text-danger text-sm">{{
@@ -264,16 +310,18 @@ onMounted(() => {
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="jobPosition">Должность*</label>
-                    <Selector key-field="id" modal-title="Выбрать должность" api-path="/jobPositions"
+                    <Selector key-field="id" modal-title="Выбрать должность" api-path="/job-position"
                         display-field="name" v-model="form.fields.jobPosition"
                         :has-error="!!form.fieldErrors.jobPosition">
                     </Selector>
                     <span v-if="form.fieldErrors.jobPosition" class="text-danger text-sm">{{
                         form.fieldErrors.jobPosition }}</span>
                 </div>
-                <div class="flex justify-end gap-2 mt-4">
-                    <button class="btn" @click="onCloseEditModal()">Отмена</button>
-                    <button class="btn" @click="form.submit()">Сохранить</button>
+                <div class="flex flex-wrap justify-end gap-2 mt-4">
+                    <button class="btn px-4" @click="onCloseEditModal()">Отмена</button>
+                    <button class="btn px-4" @click="form.submit()" :disabled="isSaving">
+                        {{ isSaving ? 'Загрузка...' : 'Сохранить' }}
+                    </button>
                 </div>
             </div>
         </Modal>
@@ -281,7 +329,7 @@ onMounted(() => {
         <Modal title="Подтверждение увольнения" :is-open="showFireConfirmationModal" @close="cancelFire">
             <div class="flex flex-col gap-4">
                 <p>Вы уверены, что хотите уволить сотрудника {{ employeeToFire?.fullName }}?</p>
-                <div class="flex justify-end gap-2">
+                <div class="flex flex-wrap justify-end gap-2">
                     <button class="btn" @click="cancelFire">Отмена</button>
                     <button class="btn bg-danger border-danger" @click="fireEmployee">Уволить</button>
                 </div>

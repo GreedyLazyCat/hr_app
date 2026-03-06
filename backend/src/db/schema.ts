@@ -52,7 +52,7 @@ export const employee = pgTable(
 
     patronymic: varchar('patronymic', { length: 255 }),
 
-    brithDate: date('brith_date').notNull(),
+    birthDate: date('brith_date').notNull(),
 
     passportSeriesAndNumber: varchar('passport_series_and_number', {
       length: 10,

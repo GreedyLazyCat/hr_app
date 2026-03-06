@@ -3,7 +3,7 @@ export class Employee {
   firstName: string;
   lastName: string;
   patronymic: string | null;
-  brithDate: string;
+  birthDate: string;
   passportSeriesAndNumber: string;
   contacts: string;
   adress: string;
