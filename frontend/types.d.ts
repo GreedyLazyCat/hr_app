@@ -1,5 +1,5 @@
 declare global {
-  interface EmployeeFull {
+  interface EmployeeFullServer {
     id: number;
     firstName: string;
     lastName: string;
@@ -10,6 +10,23 @@ declare global {
     adress: string;
     salary: number;
     hireDate: string;
+    isFired: boolean;
+    department: Department | null;
+    jobPosition: JobPostion | null;
+    fullName: string | null;
+  }
+
+  interface EmployeeFull {
+    id: number;
+    firstName: string;
+    lastName: string;
+    patronymic: string;
+    birthDate: Date;
+    passportSeriesAndNumber: string;
+    contacts: string;
+    adress: string;
+    salary: number;
+    hireDate: Date;
     isFired: boolean;
     department: Department | null;
     jobPosition: JobPostion | null;

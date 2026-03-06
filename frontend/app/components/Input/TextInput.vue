@@ -7,7 +7,7 @@ const { placeholder = "", name = "", inputId = "", type = "text" } = defineProps
     type?: string
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<string | number | Date>()
 const inputRef = useTemplateRef('input')
 
 function focusInput() {
@@ -15,7 +15,6 @@ function focusInput() {
         inputRef.value.focus()
     }
 }
-
 
 </script>
 

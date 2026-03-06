@@ -16,6 +16,14 @@ const passport = computed(() => {
     return `${series} ${number}`
 })
 
+const fullName = computed(() => {
+    if (employee.patronymic) {
+        return `${employee.firstName} ${employee.lastName} ${employee.patronymic}`
+    }
+
+    return `${employee.firstName} ${employee.lastName}`
+})
+
 function fireClicked() {
     emit('fireClicked', employee)
 }
@@ -29,7 +37,7 @@ function editClicked() {
 <template>
     <div class="flex flex-col gap-2 border bg-bg border-border px-4 py-3 rounded-xl w-full">
         <div class="flex items-start justify-between">
-            <h2 class="text-xl">{{ employee.fullName }}</h2>
+            <h2 class="text-xl">{{ fullName }}</h2>
 
             <div class="relative bg-primary p-5 rounded-full">
                 <Icon name="material-symbols:person"

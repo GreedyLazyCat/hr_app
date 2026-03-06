@@ -47,7 +47,7 @@ watch(() => isOpen, (newVal) => {
         <Teleport to="#teleports">
             <div v-if="isOpen" class="fixed inset-0 bg-primary/40 flex items-center justify-center p-4 overflow-y-auto"
                 @click="clickedOutside" :style="styles">
-                <div class="w-full md:w-fit flex flex-col p-4 gap-2 bg-bg border border-border rounded-2xl shadow-lg max-h-full"
+                <div class="w-full md:w-fit flex flex-col p-4 gap-2 bg-bg border border-border rounded-2xl shadow-lg overflow-hidden"
                     :class="modalClass" @click.stop>
                     <div class="flex items-center justify-between relative " :class="headerClass" v-if="hasHeader">
                         <h2 class="text-xl font-medium text-center">{{ title }}</h2>
@@ -55,7 +55,9 @@ watch(() => isOpen, (newVal) => {
                             <Icon name="material-symbols:close" class="text-2xl" />
                         </button>
                     </div>
-                    <slot></slot>
+                    <div class="overflow-y-auto max-h-[80vh]">
+                        <slot></slot>
+                    </div>
                 </div>
             </div>
         </Teleport>
