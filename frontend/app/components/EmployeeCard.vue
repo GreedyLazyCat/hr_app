@@ -24,6 +24,17 @@ const fullName = computed(() => {
     return `${employee.firstName} ${employee.lastName}`
 })
 
+const birthDate = computed(() => {
+    const date = new Date(employee.birthDate)
+    return date.toLocaleDateString()
+})
+
+
+const hireDate = computed(() => {
+    const date = new Date(employee.hireDate)
+    return date.toLocaleDateString()
+})
+
 function fireClicked() {
     emit('fireClicked', employee)
 }
@@ -62,7 +73,7 @@ function editClicked() {
 
         <div class="flex items-center gap-2">
             <Icon name="material-symbols:cake" />
-            <span>Дата рождения: {{ employee.birthDate }}</span>
+            <span>Дата рождения: {{ birthDate }}</span>
         </div>
 
         <div class="flex items-center gap-2">
@@ -82,7 +93,7 @@ function editClicked() {
 
         <div class="flex items-center gap-2">
             <Icon name="material-symbols:event" />
-            <span>Дата приема на работу: {{ employee.hireDate }}</span>
+            <span>Дата приема на работу: {{ hireDate }}</span>
         </div>
 
         <div class="flex justify-end gap-2 mt-3 pt-3 border-t border-border">

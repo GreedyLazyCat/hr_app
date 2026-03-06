@@ -21,12 +21,12 @@ declare global {
     firstName: string;
     lastName: string;
     patronymic: string;
-    birthDate: Date;
+    birthDate: string;
     passportSeriesAndNumber: string;
     contacts: string;
     adress: string;
-    salary: number;
-    hireDate: Date;
+    salary: string;
+    hireDate: string;
     isFired: boolean;
     department: Department | null;
     jobPosition: JobPostion | null;

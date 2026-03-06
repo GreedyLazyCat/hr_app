@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 
-const { placeholder = "", name = "", inputId = "", type = "text" } = defineProps<{
+const { placeholder = "", name = "", inputId = "", type = "text", hasError = false } = defineProps<{
     placeholder?: string
     name?: string
     inputId?: string
-    type?: string
+    type?: string,
+    hasError?: boolean
 }>()
 
-const model = defineModel<string | number | Date>()
+const model = defineModel<string>()
 const inputRef = useTemplateRef('input')
 
 function focusInput() {
@@ -19,8 +20,8 @@ function focusInput() {
 </script>
 
 <template>
-    <div class="flex gap-2 items-center bg-bg border border-border px-4 py-3 rounded-xl hover:cursor-text focus-within:border-primary transition-all"
-        @click="focusInput">
+    <div class="flex gap-2 items-center bg-bg border px-4 py-3 rounded-xl hover:cursor-text focus-within:border-primary transition-all"
+        :class="{ 'border-danger border-2': hasError, 'border-border': !hasError }" @click="focusInput">
         <input :type="type" :id="inputId" :name="name" ref="input" v-model="model" :placeholder="placeholder"
             class="focus:outline-0 w-full text-text-muted">
         <slot name="trailing"></slot>
