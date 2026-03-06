@@ -4,6 +4,8 @@ import { UpdateEmployeeDto } from './dto/update-employee.dto';
 import { EmployeeRepository } from './employee.repository';
 import { EmployeeFilterDto } from './dto/employee-filter.dto';
 import { PaginationDto } from 'src/common/dto/pagination.dto';
+import { ListReturn } from 'src/common/types';
+import { EmployeeFull } from './entities/employee-full.entity';
 
 @Injectable()
 export class EmployeeService {
@@ -13,8 +15,17 @@ export class EmployeeService {
     return this.employeeRepo.create(createEmployeeDto);
   }
 
-  findAllFull(filters: EmployeeFilterDto, pagination: PaginationDto) {
-    return this.employeeRepo.findAllFull(filters, pagination);
+  async findAllFull(
+    filters: EmployeeFilterDto,
+    pagination: PaginationDto,
+  ): Promise<ListReturn<EmployeeFull>> {
+    const data = await this.employeeRepo.findAllFull(filters, pagination);
+    return {
+      data,
+      page: pagination.page,
+      itemsPerPage: pagination.itemsPerPage,
+      isLastPage: pagination.itemsPerPage > data.length,
+    };
   }
 
   findOne(id: number) {
