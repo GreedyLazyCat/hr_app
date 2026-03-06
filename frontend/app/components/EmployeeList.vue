@@ -1,65 +1,31 @@
 <script lang="ts" setup>
 import * as z from "zod";
 import useForm from "~/composables/useForm";
+import useItemLoader from "~/composables/useItemLoader";
 
 const { filters } = defineProps<{
     filters: {
+        fullName: string,
         jobPosition: JobPostion | null,
         department: Department | null
     }
 }>()
 
-const employees = ref<EmployeeFull[]>([
-    {
-        id: 1,
-        firstName: "Иван",
-        lastName: "Иванов",
-        patronymic: "Иванович",
-        birthDate: "2025-10-25",
-        passportSeriesAndNumber: "1010234567",
-        contacts: "asldf",
-        adress: "sdfa",
-        salary: 123,
-        hireDate: "2025-10-25",
-        isFired: false,
-        department: {
-            id: 1,
-            name: "Отдел"
-        },
-        jobPosition: {
-            id: 1,
-            name: "Позиция"
-        },
-        fullName: "Иванов Иван Иванович",
-    },
-    {
-        id: 2,
-        firstName: "Иван",
-        lastName: "Иванов",
-        patronymic: "Иванович",
-        birthDate: "2025-10-25",
-        passportSeriesAndNumber: "1010234567",
-        contacts: "asldf",
-        adress: "sdfa",
-        salary: 123,
-        hireDate: "2025-10-25",
-        isFired: false,
-        department: {
-            id: 1,
-            name: "Отдел"
-        },
-        jobPosition: {
-            id: 1,
-            name: "Позиция"
-        },
-        fullName: "Иванов Иван Иванович",
-    }
-]);
+const {
+    items: employees,
+    reload,
+    loadNextPage,
+    shouldShowLoadingSpinner,
+    setFilters,
+    endReached,
+    loadingItems
+} = useItemLoader<EmployeeFull>(1, 10, "/employee")
 
 const showEditModal = ref(false);
 const currentEmployee = ref<EmployeeFull | null>(null);
 const showFireConfirmationModal = ref(false);
 const employeeToFire = ref<EmployeeFull | null>(null);
+const error = ref<any>(null);
 
 const employeeSchema = z.object({
     firstName: z.string().min(1, "Имя обязательно"),
@@ -100,6 +66,24 @@ const form = useForm<EmployeeFullWOId>(
     },
     employeeSchema
 );
+
+async function fetchEmployees() {
+    try {
+        error.value = null;
+        await reload();
+    } catch (err) {
+        error.value = err;
+        console.error("Failed to fetch employees:", err);
+    }
+}
+
+async function loadMoreEmployees() {
+    try {
+        await loadNextPage();
+    } catch (err) {
+        console.error("Failed to load more employees:", err);
+    }
+}
 
 function onCloseEditModal() {
     showEditModal.value = false;
@@ -181,6 +165,25 @@ function cancelFire() {
     showFireConfirmationModal.value = false;
     employeeToFire.value = null;
 }
+
+watch(() => filters, async (newFilters) => {
+    const newFilterObj: Partial<EmployeeServerFilter> = {};
+    if (newFilters.jobPosition) {
+        newFilterObj.jobPostionId = newFilters.jobPosition.id;
+    }
+    if (newFilters.department) {
+        newFilterObj.departmentId = newFilters.department.id;
+    }
+    if (newFilters.fullName !== "") {
+        newFilterObj.fullName = newFilters.fullName;
+    }
+    await setFilters(newFilterObj);
+    await fetchEmployees();
+}, { deep: true, immediate: true });
+
+onMounted(() => {
+    fetchEmployees();
+});
 </script>
 
 <template>
@@ -255,7 +258,8 @@ function cancelFire() {
                     <Selector key-field="id" modal-title="Выбрать отдел" api-path="/departments" display-field="name"
                         v-model="form.fields.department" :has-error="!!form.fieldErrors.department">
                     </Selector>
-                    <span v-if="form.fieldErrors.department" class="text-danger text-sm">{{ form.fieldErrors.department
+                    <span v-if="form.fieldErrors.department" class="text-danger text-sm">{{
+                        form.fieldErrors.department
                         }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
@@ -291,8 +295,29 @@ function cancelFire() {
                 Добавить сотрудника
             </span>
         </button>
-        <EmployeeCard v-for="employee in employees" :key="employee.id" :employee="employee"
-            @edit-clicked="onEditEmployee(employee)" @fire-clicked="onFireEmployee(employee)">
-        </EmployeeCard>
+
+        <div v-if="error" class="flex flex-col items-center justify-center gap-4 py-8">
+            <Icon name="material-symbols:error-outline" class="text-danger text-4xl"></Icon>
+            <p class="text-danger text-xl">Что-то пошло не так</p>
+            <button class="btn" @click="fetchEmployees">Попробовать снова</button>
+        </div>
+
+        <div v-else-if="employees.length === 0 && !loadingItems"
+            class="flex flex-col items-center justify-center gap-4 py-8">
+            <Icon name="material-symbols:person-off" class="text-text-muted text-4xl"></Icon>
+            <p class="text-text-muted text-xl">Список сотрудников пуст</p>
+        </div>
+
+        <div v-else class="flex flex-col gap-2 w-full">
+            <EmployeeCard v-for="employee in employees" :key="employee.id" :employee="employee"
+                @edit-clicked="onEditEmployee(employee)" @fire-clicked="onFireEmployee(employee)">
+            </EmployeeCard>
+
+            <LoadingTrigger v-if="!endReached" @intersected="loadMoreEmployees" margin="50px" />
+
+            <div v-if="shouldShowLoadingSpinner" class="flex justify-center py-4">
+                <LoadingSpinner width="25px" height="25px" :centered="false"></LoadingSpinner>
+            </div>
+        </div>
     </div>
 </template>

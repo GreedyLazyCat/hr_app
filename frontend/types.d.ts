@@ -1,4 +1,16 @@
 declare global {
+  interface EmployeeServerFilter {
+    fullName?: string;
+    departmentId?: number;
+    jobPostionId?: number;
+  }
+
+  interface EmployeeFilter {
+    jobPosition: JobPostion | null;
+    department: Department | null;
+    fullName: string;
+  }
+
   interface EmployeeFullServer {
     id: number;
     firstName: string;
