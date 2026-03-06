@@ -1,11 +1,5 @@
 import * as z from "zod";
 
-function hasError(obj: Record<string, string | null>) {
-  return Object.keys(obj).some((key) => {
-    return obj[key] === null;
-  });
-}
-
 function validateFields(
   fields: Record<string, any>,
   zodSchema: z.ZodObject,
@@ -32,9 +26,9 @@ function validateFields(
   return true;
 }
 
-export default function (
-  fields: Record<string, any>,
-  submitter: (fields: Record<string, any>) => Promise<void>,
+export default function <T extends Record<string, any>>(
+  fields: T,
+  submitter: (fields: T) => Promise<void>,
   zodSchema: z.ZodObject,
 ) {
   const fieldErrors: Record<string, string | null> = {};
@@ -42,9 +36,16 @@ export default function (
     fieldErrors[key] = null;
   });
 
+  function resetFieldErrors() {
+    Object.keys(fields).forEach((key) => {
+      fieldErrors[key] = null;
+    });
+  }
+
   return reactive({
     fields,
     fieldErrors,
+    resetErrors: resetFieldErrors,
     processing: false,
     submitError: null as unknown | null,
     async submit() {

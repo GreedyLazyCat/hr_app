@@ -25,7 +25,7 @@ declare global {
     passportSeriesAndNumber: string;
     contacts: string;
     adress: string;
-    salary: string;
+    salary: number;
     hireDate: string;
     isFired: boolean;
     department: Department | null;
@@ -42,6 +42,8 @@ declare global {
     id: number;
     name: string;
   }
+
+  type EmployeeFullWOId = Omit<EmployeeFull, "id" | "fullName" | "isFired">;
 }
 
 export {};

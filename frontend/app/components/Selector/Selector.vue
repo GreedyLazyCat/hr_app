@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-const { modalTitle = "Окно селектора", displayField = "name", keyField } = defineProps<{
+const { modalTitle = "Окно селектора", displayField = "name", keyField, hasError = false } = defineProps<{
     displayField: string,
     keyField: string,
     apiPath: string,
-    modalTitle: string
+    modalTitle: string,
+    hasError?: boolean,
 }>()
 
 const model = defineModel<Record<string, any> | null>({ default: null })
@@ -78,7 +79,7 @@ watch(showSelectorModal, (newVal) => {
 
 <template>
     <div class="flex gap-2 items-center justify-between bg-bg border border-border px-4 py-3 rounded-xl hover:cursor-pointer focus-within:border-primary transition-all"
-        @click="openSelectorModal()">
+        :class="{ 'border-danger border-2': hasError, 'border-border': !hasError }" @click="openSelectorModal()">
         <div class="flex gap-2">
             <slot name="leading"></slot>
             <span>{{ selectorText }}</span>

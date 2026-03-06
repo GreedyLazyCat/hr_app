@@ -8,7 +8,7 @@ const { placeholder = "", name = "", inputId = "", type = "text", hasError = fal
     hasError?: boolean
 }>()
 
-const model = defineModel<string>()
+const model = defineModel<string | number>()
 const inputRef = useTemplateRef('input')
 
 function focusInput() {
