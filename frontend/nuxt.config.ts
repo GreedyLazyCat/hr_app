@@ -16,4 +16,9 @@ export default defineNuxtConfig({
     // @ts-expect-error @nuxt/schema 4.3.1 inlines vite types, breaking compatibility with @tailwindcss/vite
     plugins: [tailwindcss()],
   },
+  runtimeConfig: {
+    public: {
+      apiBase: "http://localhost:4000",
+    },
+  },
 });
