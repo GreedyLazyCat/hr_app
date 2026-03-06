@@ -1,20 +1,16 @@
 <script lang="ts" setup>
 
-const departmentFilter = ref<Department | null>(
-    {
-        id: 1,
-        name: "Отдел"
-    }
-)
-
-const jobPositionFilter = ref<JobPostion | null>({
-    id: 1,
-    name: "Разработчик"
+const filters = reactive<{
+    jobPosition: JobPostion | null,
+    department: Department | null,
+}>({
+    jobPosition: null,
+    department: null,
 })
 
 function clearFilters() {
-    jobPositionFilter.value = null
-    departmentFilter.value = null
+    filters.department = null
+    filters.jobPosition = null
 }
 
 </script>
@@ -36,14 +32,14 @@ function clearFilters() {
                     <div class="flex flex-col md:flex-row gap-3">
                         <div class="flex flex-col gap-2 w-full">
                             <label for="">Отдел</label>
-                            <Selector key-field="id" modal-title="Выбрать отдел" api-path="/" display-field="name"
-                                v-model="departmentFilter">
+                            <Selector key-field="id" modal-title="Выбрать отдел" api-path="/department"
+                                display-field="name" v-model="filters.department">
                             </Selector>
                         </div>
                         <div class="flex flex-col gap-2 w-full">
                             <label for="">Должность</label>
-                            <Selector key-field="id" modal-title="Выбрать должность" api-path="/" display-field="name"
-                                v-model="jobPositionFilter">
+                            <Selector api-path="/job-position" key-field="id" modal-title="Выбрать должность"
+                                display-field="name" v-model="filters.jobPosition">
                             </Selector>
                         </div>
                     </div>
@@ -52,7 +48,7 @@ function clearFilters() {
             </div>
         </div>
         <div class="flex gap-2 py-4">
-            <EmployeeList></EmployeeList>
+            <EmployeeList :filters="filters"></EmployeeList>
         </div>
     </section>
 </template>

@@ -2,6 +2,13 @@
 import * as z from "zod";
 import useForm from "~/composables/useForm";
 
+const { filters } = defineProps<{
+    filters: {
+        jobPosition: JobPostion | null,
+        department: Department | null
+    }
+}>()
+
 const employees = ref<EmployeeFull[]>([
     {
         id: 1,
