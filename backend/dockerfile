@@ -1,5 +1,7 @@
 FROM node:20
 
+RUN apt-get update && apt-get install -y postgresql-client
+
 WORKDIR /usr/src/app
 
 COPY package*.json ./
@@ -8,8 +10,10 @@ RUN npm install
 
 COPY . .
 
-RUN npm run build 
+RUN npm run build
 
-EXPOSE 4000 
+RUN chmod +x start.sh
 
-CMD ["node", "dist/src/main"]
+EXPOSE 4000
+
+CMD ["./start.sh"]
