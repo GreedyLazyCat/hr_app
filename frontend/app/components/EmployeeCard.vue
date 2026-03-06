@@ -29,7 +29,6 @@ const birthDate = computed(() => {
     return date.toLocaleDateString()
 })
 
-
 const hireDate = computed(() => {
     const date = new Date(employee.hireDate)
     return date.toLocaleDateString()
@@ -48,7 +47,10 @@ function editClicked() {
 <template>
     <div class="flex flex-col gap-2 border bg-bg border-border px-4 py-3 rounded-xl w-full">
         <div class="flex items-start justify-between">
-            <h2 class="text-xl">{{ fullName }}</h2>
+            <div class="flex items-center gap-2">
+                <h2 class="text-xl">{{ fullName }}</h2>
+                <span v-if="employee.isFired" class="bg-danger text-bg px-2 py-1 rounded-full text-sm">Уволен</span>
+            </div>
 
             <div class="relative bg-primary p-5 rounded-full">
                 <Icon name="material-symbols:person"
@@ -97,12 +99,15 @@ function editClicked() {
         </div>
 
         <div class="flex justify-end gap-2 mt-3 pt-3 border-t border-border">
-            <button class="btn flex items-center gap-2 bg-danger border-danger px-4" @click="fireClicked()">
+            <button class="btn flex items-center gap-2 bg-danger border-danger px-4" @click="fireClicked()"
+                :disabled="employee.isFired">
                 <Icon name="material-symbols:person-off" />
                 <span>Уволить</span>
             </button>
 
-            <button class="btn flex items-center gap-2 px-4" @click="editClicked()">
+            <button class="btn flex items-center gap-2 px-4" @click="editClicked()" :disabled="employee.isFired"
+                :class="{ 'opacity-45': employee.isFired, 'cursor-default': employee.isFired }">
+
                 <Icon name="material-symbols:edit" />
                 <span>Редактировать</span>
             </button>

@@ -51,6 +51,8 @@ const employees = ref<EmployeeFull[]>([
 
 const showEditModal = ref(false);
 const currentEmployee = ref<EmployeeFull | null>(null);
+const showFireConfirmationModal = ref(false);
+const employeeToFire = ref<EmployeeFull | null>(null);
 
 const employeeSchema = z.object({
     firstName: z.string().min(1, "Имя обязательно"),
@@ -65,11 +67,11 @@ const employeeSchema = z.object({
     department: z.object({
         id: z.number(),
         name: z.string()
-    }),
+    }, "Отдел обязателен"),
     jobPosition: z.object({
         id: z.number(),
         name: z.string()
-    }),
+    }, "Должность обязательна"),
 });
 
 const form = useForm<EmployeeFullWOId>(
@@ -150,6 +152,27 @@ function saveEmployee(fields: EmployeeFullWOId) {
         }
         onCloseEditModal();
     }
+}
+
+function onFireEmployee(employee: EmployeeFull) {
+    employeeToFire.value = employee;
+    showFireConfirmationModal.value = true;
+}
+
+function fireEmployee() {
+    if (employeeToFire.value) {
+        const index = employees.value.findIndex(emp => emp.id === employeeToFire.value!.id);
+        if (index !== -1 && employees.value[index]) {
+            employees.value[index].isFired = true;
+        }
+        showFireConfirmationModal.value = false;
+        employeeToFire.value = null;
+    }
+}
+
+function cancelFire() {
+    showFireConfirmationModal.value = false;
+    employeeToFire.value = null;
 }
 </script>
 
@@ -243,6 +266,17 @@ function saveEmployee(fields: EmployeeFullWOId) {
                 </div>
             </div>
         </Modal>
+
+        <Modal title="Подтверждение увольнения" :is-open="showFireConfirmationModal" @close="cancelFire">
+            <div class="flex flex-col gap-4">
+                <p>Вы уверены, что хотите уволить сотрудника {{ employeeToFire?.fullName }}?</p>
+                <div class="flex justify-end gap-2">
+                    <button class="btn" @click="cancelFire">Отмена</button>
+                    <button class="btn bg-danger border-danger" @click="fireEmployee">Уволить</button>
+                </div>
+            </div>
+        </Modal>
+
         <button class="btn flex gap-2 items-center px-4 text-text-muted border-border-muted bg-bg w-fit self-end"
             @click="onAddEmployee()">
             <Icon name="material-symbols:add"></Icon>
@@ -251,7 +285,7 @@ function saveEmployee(fields: EmployeeFullWOId) {
             </span>
         </button>
         <EmployeeCard v-for="employee in employees" :key="employee.id" :employee="employee"
-            @edit-clicked="onEditEmployee(employee)">
+            @edit-clicked="onEditEmployee(employee)" @fire-clicked="onFireEmployee(employee)">
         </EmployeeCard>
     </div>
 </template>
