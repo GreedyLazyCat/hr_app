@@ -15,3 +15,4 @@
 ```
 docker compose up -d
 ```
+Далее просто открыть http://localhost
