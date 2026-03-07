@@ -11,6 +11,7 @@ const fullNameSearch = ref("")
 function clearFilters() {
     filters.department = null
     filters.jobPosition = null
+    fullNameSearch.value = ""
 }
 
 const debouncedFilterReload = debounceAsyncFunc(async () => {
