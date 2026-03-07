@@ -38,6 +38,8 @@ const addressExample = "101000, г. Москва, ул. Примерная, д. 
 
 const passportRegex = /^\d{10}$/;
 
+const root = useTemplateRef('employee-list')
+
 const employeeSchema = z.object({
     firstName: z.string().min(1, "Имя обязательно"),
     lastName: z.string().min(1, "Фамилия обязательна"),
@@ -224,8 +226,10 @@ watch(() => filters, async (newFilters) => {
         newFilterObj.fullName = newFilters.fullName;
     }
     await setFilters(newFilterObj);
-    await fetchEmployees();
-}, { deep: true, immediate: true });
+    if (import.meta.client) {
+        await fetchEmployees();
+    }
+}, { deep: true });
 
 onMounted(() => {
     fetchEmployees();
@@ -233,7 +237,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class="flex flex-col gap-2 w-full">
+    <div class="flex flex-col gap-2 w-full" ref="employee-list">
         <Modal title="Редактировать сотрудника" :is-open="showEditModal" @close="onCloseEditModal()">
             <div class="flex flex-col gap-2 w-full md:min-w-150">
                 <div class="flex flex-col gap-2 w-full">
@@ -241,28 +245,28 @@ onMounted(() => {
                     <TextInput v-model="form.fields.lastName" placeholder="Фамилия"
                         :has-error="!!form.fieldErrors.lastName" />
                     <span v-if="form.fieldErrors.lastName" class="text-danger text-sm">{{ form.fieldErrors.lastName
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="firstName">Имя*</label>
                     <TextInput v-model="form.fields.firstName" placeholder="Имя"
                         :has-error="!!form.fieldErrors.firstName" />
                     <span v-if="form.fieldErrors.firstName" class="text-danger text-sm">{{ form.fieldErrors.firstName
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="patronymic">Отчество</label>
                     <TextInput v-model="form.fields.patronymic" placeholder="Отчество"
                         :has-error="!!form.fieldErrors.patronymic" />
                     <span v-if="form.fieldErrors.patronymic" class="text-danger text-sm">{{ form.fieldErrors.patronymic
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="birthDate">Дата рождения*</label>
                     <TextInput v-model="form.fields.birthDate" type="date" placeholder="Дата рождения"
                         :has-error="!!form.fieldErrors.birthDate" />
                     <span v-if="form.fieldErrors.birthDate" class="text-danger text-sm">{{ form.fieldErrors.birthDate
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="passportSeriesAndNumber">Серия и номер паспорта*</label>
@@ -276,28 +280,28 @@ onMounted(() => {
                     <TextInput v-model="form.fields.contacts" placeholder="+7 (XXX) XXX-XX-XX"
                         :has-error="!!form.fieldErrors.contacts" />
                     <span v-if="form.fieldErrors.contacts" class="text-danger text-sm">{{ form.fieldErrors.contacts
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="adress">Адрес*</label>
                     <TextInput v-model="form.fields.adress" :placeholder="addressExample"
                         :has-error="!!form.fieldErrors.adress" />
                     <span v-if="form.fieldErrors.adress" class="text-danger text-sm">{{ form.fieldErrors.adress
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="salary">Зарплата*</label>
                     <TextInput v-model="form.fields.salary" type="number" placeholder="Зарплата"
                         :has-error="!!form.fieldErrors.salary" />
                     <span v-if="form.fieldErrors.salary" class="text-danger text-sm">{{ form.fieldErrors.salary
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="hireDate">Дата приема на работу*</label>
                     <TextInput v-model="form.fields.hireDate" type="date" placeholder="Дата приема на работу"
                         :has-error="!!form.fieldErrors.hireDate" />
                     <span v-if="form.fieldErrors.hireDate" class="text-danger text-sm">{{ form.fieldErrors.hireDate
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="department">Отдел*</label>
@@ -306,7 +310,7 @@ onMounted(() => {
                     </Selector>
                     <span v-if="form.fieldErrors.department" class="text-danger text-sm">{{
                         form.fieldErrors.department
-                        }}</span>
+                    }}</span>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <label for="jobPosition">Должность*</label>
@@ -361,7 +365,7 @@ onMounted(() => {
                 @edit-clicked="onEditEmployee(employee)" @fire-clicked="onFireEmployee(employee)">
             </EmployeeCard>
 
-            <LoadingTrigger v-if="!endReached" @intersected="loadMoreEmployees" margin="50px" />
+            <LoadingTrigger :root="root" v-if="!endReached" @intersected="loadMoreEmployees" margin="50px" />
 
             <div v-if="shouldShowLoadingSpinner" class="flex justify-center py-4">
                 <LoadingSpinner width="25px" height="25px" :centered="false"></LoadingSpinner>

@@ -42,7 +42,7 @@ export default class ItemsLoader<T> {
   /**
    * Были ли загружены все доступные элементы.
    */
-  endReached = false;
+  endReached = ref(false);
   /**
    * Количество элементов на страницу
    */
@@ -85,9 +85,9 @@ export default class ItemsLoader<T> {
    * @returns загруженный список объектов
    */
   async reload() {
-    this.endReached = false;
+    this.endReached.value = false;
     this.page = 1;
-    this.loadingItems.value = true && !this.endReached;
+    this.loadingItems.value = true && !this.endReached.value;
     try {
       this.startTimeout();
       const newItems = await useNuxtApp().$api<ListReturn<T>>(this.apiPath, {
@@ -99,7 +99,7 @@ export default class ItemsLoader<T> {
           ...this.constantFilters,
         },
       });
-      this.endReached = newItems.isLastPage;
+      this.endReached.value = newItems.isLastPage;
       this.items.value = newItems.data;
       this.loadingItems.value = false;
       this.stopTimeout();
@@ -135,13 +135,13 @@ export default class ItemsLoader<T> {
    * @returns загруженный список объектов
    */
   async loadNextPage() {
-    if (this.loadingItems.value || this.endReached) {
+    if (this.loadingItems.value || this.endReached.value) {
       return null;
     }
     this.page += 1;
     this.startTimeout();
     try {
-      this.loadingItems.value = true && !this.endReached;
+      this.loadingItems.value = true && !this.endReached.value;
       const newItems = await useNuxtApp().$api<ListReturn<T>>(this.apiPath, {
         method: "GET",
         query: {
@@ -154,7 +154,7 @@ export default class ItemsLoader<T> {
       if (newItems.data.length !== 0) {
         this.items.value.push(...newItems.data);
       }
-      this.endReached = newItems.isLastPage;
+      this.endReached.value = newItems.isLastPage;
       this.loadingItems.value = false;
       this.stopTimeout();
       return newItems;

@@ -1,25 +1,39 @@
 #!/bin/sh
-
 set -e
 
-echo "Waiting for postgres..."
+MARKER_FILE=/run_marker/initialized.txt
 
-until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER
-do
-  sleep 2
-done
+if [ -f "$MARKER_FILE" ]; then
+    echo "Migrations and seeding already done, skipping..."
+else
+    echo "First run: running migrations and seeding"
 
-echo "Postgres is ready"
+    echo "Waiting for Postgres..."
+    until pg_isready -h $DB_HOST -p $DB_PORT -U $DB_USER; do
+      sleep 2
+    done
 
-echo "Creating extension pg_trgm if not exists..."
+    echo "Postgres is ready"
 
-psql "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" \
-  -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
+    psql "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" \
+      -c "CREATE EXTENSION IF NOT EXISTS pg_trgm;"
 
-echo "Running drizzle push..."
+    npx drizzle-kit push
 
-npx drizzle-kit push
+    psql "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" <<EOF
+INSERT INTO department (name) VALUES
+('Инженерия'),('Отдел кадров'),('Финансы'),('Маркетинг'),('Продажи'),('ИТ поддержка'),
+('Юридический отдел'),('Производство'),('Логистика'),('Закупки'),('Исследования и разработки'),
+('Обслуживание клиентов');
 
-echo "Starting NestJS server..."
+INSERT INTO job_postion (name) VALUES
+('Программист'),('Менеджер продукта'),('HR специалист'),('Маркетолог'),('Менеджер по продажам'),
+('Системный администратор'),('Юрист'),('Инженер производства'),('Логист'),('Закупщик'),
+('Исследователь'),('Специалист по работе с клиентами');
+EOF
+
+    echo "initialized" > "$MARKER_FILE"
+    echo "Migrations and seeding completed!"
+fi
 
 node dist/src/main.js

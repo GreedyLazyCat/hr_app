@@ -28,6 +28,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    volumes:
+      - ./backend_run_marker:/run_marker
 
   frontend:
     build: ./frontend

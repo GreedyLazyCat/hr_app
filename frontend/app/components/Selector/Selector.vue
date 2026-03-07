@@ -21,6 +21,7 @@ const model = defineModel<Record<string, any> | null>({ default: null })
 const selectedInModal = ref<Record<string, any> | null>(null)
 const showSelectorModal = ref(false)
 const searchText = ref<string>("")
+const scrollRoot = useTemplateRef('items-list')
 
 const selectorText = computed(() => {
     if (model.value && Object.keys(model.value).includes(displayField)) {
@@ -70,9 +71,9 @@ const debouncedFilterReload = debounceAsyncFunc(async () => {
     await fetchItems()
 }, 250)
 
-function openSelectorModal() {
+async function openSelectorModal() {
+    await fetchItems()
     showSelectorModal.value = true
-    fetchItems()
 }
 
 function closeSelectorModal() {
@@ -132,7 +133,7 @@ watch(searchText, async (newValue) => {
                         <Icon name="material-symbols:search" class="text-text-muted text-lg"></Icon>
                     </template>
                 </TextInput>
-                <div class="flex flex-col gap-2 w-full min-h-20 max-h-120 overflow-scroll">
+                <div class="flex flex-col gap-2 w-full min-h-20 max-h-120 overflow-y-scroll" ref="items-list">
                     <div class="flex items-center justify-between border border-border cursor-pointer w-full px-4 py-3 rounded-xl"
                         :class="{ 'bg-primary text-bg-light': isSelectedModalNull }" @click="clearSelectedInModal()">
                         <span>Не выбрано</span>
@@ -144,7 +145,7 @@ watch(searchText, async (newValue) => {
                         <span>{{ getItemDisplayField(item) }}</span>
                         <Icon name="material-symbols:check" v-if="isSelected(item)"></Icon>
                     </div>
-                    <LoadingTrigger v-if="!endReached" @intersected="loadMoreItems" margin="50px" />
+                    <LoadingTrigger :root="scrollRoot" v-if="!endReached" @intersected="loadMoreItems" margin="50px" />
                     <div v-if="shouldShowLoadingSpinner" class="flex justify-center py-2">
                         <LoadingSpinner width="25px" height="25px" :centered="false"></LoadingSpinner>
                     </div>

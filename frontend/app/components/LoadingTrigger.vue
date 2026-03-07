@@ -1,12 +1,13 @@
 <script lang="ts" setup>
 
-const { margin = "0px" } = defineProps<{
+const { margin = "0px", root } = defineProps<{
     /**
      * Насколько заранее или позже детектить появление компонента на экране.
      * Наиболее точное описание - описание rootMargin в документации
      * IntersectionObserver от MDN Web Docs.
      */
-    margin?: string
+    margin?: string,
+    root: HTMLElement | null,
 }>()
 
 const emit = defineEmits<{
@@ -23,6 +24,7 @@ onMounted(() => {
         }
     },
         {
+            // root,
             threshold: 1,
             rootMargin: margin
         })
@@ -40,5 +42,5 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-    <div class="w-full" ref="loadingTrigger"></div>
+    <div class="w-full h-[2px] shrink-0" ref="loadingTrigger"></div>
 </template>
