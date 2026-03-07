@@ -133,7 +133,7 @@ watch(searchText, async (newValue) => {
                         <Icon name="material-symbols:search" class="text-text-muted text-lg"></Icon>
                     </template>
                 </TextInput>
-                <div class="flex flex-col gap-2 w-full min-h-20 max-h-120 overflow-y-scroll" ref="items-list">
+                <div class="flex flex-col gap-2 w-full min-h-20 max-h-[60vh] overflow-y-scroll" ref="items-list">
                     <div class="flex items-center justify-between border border-border cursor-pointer w-full px-4 py-3 rounded-xl"
                         :class="{ 'bg-primary text-bg-light': isSelectedModalNull }" @click="clearSelectedInModal()">
                         <span>Не выбрано</span>

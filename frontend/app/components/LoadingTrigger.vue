@@ -19,13 +19,14 @@ let observer: IntersectionObserver | null = null
 
 onMounted(() => {
     observer = new IntersectionObserver(entries => {
+        console.log(entries[0])
         if (entries[0] && entries[0].isIntersecting) {
             emit('intersected')
         }
     },
         {
-            // root,
-            threshold: 1,
+            root,
+            threshold: 0.1,
             rootMargin: margin
         })
     if (loadinTrigger.value) {

@@ -55,7 +55,7 @@ watch(() => isOpen, (newVal) => {
                             <Icon name="material-symbols:close" class="text-2xl" />
                         </button>
                     </div>
-                    <div class="">
+                    <div class="max-h-[85vh] overflow-y-scroll">
                         <slot></slot>
                     </div>
                 </div>
